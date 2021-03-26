@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+	<title>Holiday API</title>
+	<meta charset="utf-8"/>
+	<script>
+		function getHoliday() {
+			/* Step 1: Make instance of request object...
+			...to make HTTP request after page is loaded*/
+			request = new XMLHttpRequest();
+			console.log("1 - request object created");
+ 
+			// Step 2: Set the URL for the AJAX request to be the JSON file
+ 
+		request.open("GET","https://holidayapi.com/v1/holidays?pretty&key=09897517-b1a7-446e-b9e2-19d36fd741c9&country=US&year=2020", true);
+			console.log("2 - opened request file");
+ 
+			// Step 3: set up event handler/callback
+
+			request.onreadystatechange = function() {
+				 
+				if (request.readyState == 4 && request.status == 200) {
+
+					// Step 5: wait for done + success
+					console.log("5 - response received");
+					result = request.responseText;
+					alert(result);
+					document.getElementById("data").innerHTML = result;
+					holiday = JSON.parse(result);
+		
+					
+					
+					document.getElementById("data").innerHTML ="My favorite holidays: <br/>";
+
+					document.getElementById("day").innerHTML = "<li>" + holiday["holidays"][0]["name"] + " : " + holiday["holidays"][0]["date"] + "</li>" +"<li>" + holiday["holidays"][11]["name"] + " : " + holiday["holidays"][11]["date"] + "</li>" +"<li>" + holiday["holidays"][22]["name"] + " : " + holiday["holidays"][22]["date"] + "</li>" +"<li>" + holiday["holidays"][38]["name"] + " : " + holiday["holidays"][38]["date"] + "</li>"+"<li>" + holiday["holidays"][41]["name"] + " : " + holiday["holidays"][41]["date"] + "</li><br/><br/>";
+
+					document.getElementById("describeapi").innerHTML ="<strong>Describing my API: </strong><br/> My API contains data for all the US holidays on the 2020 calendar. This includes the name, date, when it's observed, whether or not it is public, the country, the weekday for the date and when it's obserrved as a word or numerically for that year. <br/><br/>";
+					document.getElementById("cite").innerHTML ="<strong>Citation for API: </strong><br/> https://holidayapi.com <br/><br/>";
+					document.getElementById("requestoptions").innerHTML ="<strong>Options used for API request: </strong><br/> To request my API, I made the function getholiday() that was called immediately when the page loaded. This function contains the rest of my javascript. For the request I used XMLHttpRequest that makes an instance of a request object when the page loads. Next I set the URL for the AJAX request to be the JSON file, making the call with the format: request.open('GET', <your_link>, true). Next an event handler/callback was set up that would display the state of the request throught the innerText of a div. If the request was successful, I had it first parse the JSON data and then change the div text to output my favorite random holidays from the JSON data into an unordered list and include all of this information. The request.send() function was used to fire off the HTTP request.<br/><br/>";
+					document.getElementById("applications").innerHTML ="<strong>Two Applications wher this API would be useful: </strong><br/> This API would be useful for shipping and logistics to improve tthe accuracy of shipping and deliverry estimates and times. It would also be useful for scheduling where holidays could be blocked out of calendars to reduce coonfusion when setting up appointments etc. <br/><br/>";
+
+
+
+
+
+				
+				}	
+			
+				else if (request.readyState == 4 && request.status != 200) {
+
+					document.getElementById("data").innerHTML = "Something is wrong!  Check the logs to see where this went off the rails";
+
+				}
+
+				else if (request.readyState == 3) {
+
+					document.getElementById("data").innerHTML = "Too soon!  Try again";
+
+				}
+
+			}
+		// Step 4: fire off the HTTP request
+			request.send();
+			console.log("4 - Request sent");   
+		}
+	</script>
+</head>
+
+
+<body onload="getHoliday()">
+
+	<h1>2020 Calendar Dates</h1>
+	<div id="data">Loading...</div>
+
+
+	<ul id="day"></ul>
+
+	<div id="describeapi"></div>
+	<div id="cite"></div>
+	<div id="requestoptions"></div>
+	<div id="applications"></div>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
